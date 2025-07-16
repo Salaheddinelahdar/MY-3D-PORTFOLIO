@@ -2,6 +2,7 @@ import { StrictMode, useEffect, useState } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.jsx'
+import ErrorBoundary from './ErrorBoundary'
 
 // Check for WebGL support
 const isWebGLAvailable = () => {
@@ -45,9 +46,34 @@ const WebGLCheck = () => {
     )
   }
   
+  // Add debug info
+  useEffect(() => {
+    console.log('App environment:', process.env.NODE_ENV);
+    console.log('Public URL:', process.env.PUBLIC_URL);
+    console.log('WebGL available:', isWebGLAvailable());
+    
+    // Log any global errors
+    window.onerror = function(message, source, lineno, colno, error) {
+      console.error('Global error:', { message, source, lineno, colno, error });
+      return false;
+    };
+    
+    // Log unhandled promise rejections
+    window.onunhandledrejection = function(event) {
+      console.error('Unhandled rejection:', event.reason);
+    };
+    
+    return () => {
+      window.onerror = null;
+      window.onunhandledrejection = null;
+    };
+  }, []);
+
   return (
     <StrictMode>
-      <App />
+      <ErrorBoundary>
+        <App />
+      </ErrorBoundary>
     </StrictMode>
   )
 }
