@@ -5,22 +5,14 @@
       "src": "package.json",
       "use": "@vercel/static-build",
       "config": {
-        "distDir": "dist",
-        "env": {
-          "NPM_CONFIG_LEGACY_PEER_DEPS": "true"
-        },
-        "maxLambdaSize": "15mb"
+        "distDir": "dist"
       }
     }
   ],
+  "buildCommand": "npm run build",
+  "installCommand": "npm install --legacy-peer-deps",
   "routes": [
-    {
-      "src": "/static/(.*)",
-      "dest": "/static/$1"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/index.html"
-    }
+    { "handle": "filesystem" },
+    { "src": "/.*", "dest": "/index.html" }
   ]
 }
