@@ -2,14 +2,22 @@ import { defineConfig, loadEnv } from 'vite';
 import react from '@vitejs/plugin-react';
 
 export default ({ mode }) => {
-  // Load environment variables
-  process.env = { ...process.env, ...loadEnv(mode, process.cwd()) };
+  // Load only the environment variables we need
+  const env = loadEnv(mode, process.cwd(), '');
+  
+  // Only pass the environment variables that start with VITE_ to the client
+  const processEnv = {};
+  Object.keys(env).forEach((key) => {
+    if (key.startsWith('VITE_')) {
+      processEnv[key] = JSON.stringify(env[key]);
+    }
+  });
 
   return defineConfig({
     plugins: [react()],
     define: {
-      'process.env': process.env,
-      global: 'globalThis', // Fix for Three.js
+      'process.env': processEnv,
+      global: 'globalThis',
     },
     build: {
       sourcemap: true, // Enable source maps for better debugging

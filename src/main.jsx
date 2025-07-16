@@ -48,8 +48,8 @@ const WebGLCheck = () => {
   
   // Add debug info
   useEffect(() => {
-    console.log('App environment:', process.env.NODE_ENV);
-    console.log('Public URL:', process.env.PUBLIC_URL);
+    console.log('App environment:', import.meta.env.MODE);
+    console.log('Public URL:', import.meta.env.BASE_URL);
     console.log('WebGL available:', isWebGLAvailable());
     
     // Log any global errors
