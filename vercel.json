@@ -7,7 +7,7 @@
       "config": {
         "distDir": "dist",
         "env": {
-          "NPM_FLAGS": "--legacy-peer-deps"
+          "NPM_CONFIG_LEGACY_PEER_DEPS": "true"
         }
       }
     }
