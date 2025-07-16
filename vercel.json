@@ -5,14 +5,11 @@
       "src": "package.json",
       "use": "@vercel/static-build",
       "config": {
-        "distDir": "dist"
+        "distDir": "dist",
+        "env": {
+          "NPM_FLAGS": "--legacy-peer-deps"
+        }
       }
     }
-  ],
-  "build": {
-    "env": {
-      "NPM_FLAGS": "--legacy-peer-deps"
-    }
-  },
-  "nodeVersion": "18.x"
+  ]
 }
